@@ -1,80 +1,65 @@
-while True:
-    name= input("Enter your username, sir? ")
-    list_parallel=[]
-    Total_parallel=[]
-    Sum=0
-    name=name.replace(" ",'').lower()
-    
-    if not name:
-        
-        print("Name can't be empty")
-        continue
-    
-    elif len(name)<=3:
-        
-        print("Name must have more than 3 characters")
-        continue
-    
-    elif len(name)>=10:
-        
-        print("Name can't have 10 or more than 10 characters")
-        continue
-    
-    else:
-        pass
-    
-    print(f"Your username is {name}")
-
-    
+def username():
     while True:
-        
-        ask=input(f"What would you like to do today sir {name}, find parallel or series?: ")
+        name=input("Please enter your username: ").replace(" ",'').lower()
+        if not name:
+            print("Name can't be empty")
+        elif len(name)<3:
+            print("Name must be 3 or greater than 3 characters, Please try again")
+        elif len(name)>15:
+            print("Name can't be greater than 15 characters, Pleas try again")
+        else:
+            return name
 
+def parallel():
+    while True:
         try:
+            num_resistors=int(input("Number of resistors= "))
+            inverse_resistors=[]
+            for i in range(1,num_resistors+1):
+                i=float(input(f"Resistor {i} = "))
+                if i==0:
+                    pass
+                inverse_resistors.append(1/i)
+                    
+            Sum=sum(inverse_resistors)
+            R_eq=1/Sum
+            print(f"Equivalent resistor= {R_eq}")
+            return
+        except ValueError:
+            print("Please enter a Numerical digit")
 
-            if ask.lower()== "parallel":
+def series():
+    while True:
+        try:
+            num_resistors=int(input("Number of resistors= "))
+            Sum=0
+            for i in range(1,num_resistors+1):
+                i=float(input(f"Resistor {i} = "))
+                Sum+=i
+            print(f"Equivalent resistor= {Sum}")
+            return
+        except ValueError:
+            print("Please enter a Numerical digit")
 
-                number_resistor=int(input(f"How many resistors are there,SIR {name}? "))
-
-                for i in range(1,number_resistor+1):
-                    i=float(input(f"Resistor {i}= "))
-                    list_parallel.append(1/i)
-
-                Sum=sum(list_parallel)
-                print(f"Your answer is {1/Sum}")
+while True:
+    name=username()
+    while True:
+        try:
+            ask=input("Choose one you wanna apply (parallel/series): ")
+            if ask.lower() == "parallel":
+                parallel()
                 break
-                
-                                        
-            elif ask.lower()=="series":
-
-                number_resistor=int(input(f"How many resistors are there,SIR {name}? "))
-
-                for j in range(1,number_resistor+1):
-                    j=float(input(f"Resistor {j}= "))
-                    Sum+=j
-
-                print(f'Your answer is {Sum}')
+            elif ask.lower() == "series":
+                series()
                 break
-            
             else:
-
-                print("Please try again")
+                print("Try Again")
                 continue
+    
+        except (NameError, ValueError, ZeroDivisionError):
+            print("Choose again, Value of resistor is always positive")
             
-            
-        except(ValueError,NameError,ZeroDivisionError):
-            print("Invalid input: Please choose again")
-
-            
-         
-
-    choice=input("Do you want to do it again? (Yes/no): ")
-
-    if choice.lower()=="yes":
-        continue
-
-    else:
-        print("Okay")
+    choice=input("Do you want to try again (Yes/No): ").lower()
+    if choice!='yes':
+        print("okay")
         break
-                
-             
